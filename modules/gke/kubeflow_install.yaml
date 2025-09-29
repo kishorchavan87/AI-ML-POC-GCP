@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubeflow
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeflow-pipelines
+  namespace: kubeflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeflow-pipelines
+  template:
+    metadata:
+      labels:
+        app: kubeflow-pipelines
+    spec:
+      containers:
+      - name: pipelines
+        image: gcr.io/ml-pipeline/api-server:2.0.0
+        ports:
+        - containerPort: 8888
